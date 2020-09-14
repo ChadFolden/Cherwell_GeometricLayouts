@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Cherwell Geometry Layouts</title>
+    <style>
+        html, body {
+            font-family: Arial;
+            font-size: 12pt;
+            background-color: rgb(25, 94, 131);
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        input, select, textarea {
+            padding: 2px 2px 2px 2px;
+        }
+        .SmallNote{
+            font-size: 8pt;
+        }
+        .CreateNote {
+            font-size: 10pt;
+            text-align: right;
+            animation: blinker 2s linear infinite;
+        }
+        @keyframes blinker {
+            20% {
+                opacity: 0;
+            }
+        }
+        .button {
+            width: 135px;
+            background-color: rgb(25, 94, 131);
+            background-image: linear-gradient(Black,Gray);
+            border: solid;
+            color: white;
+            padding: 5px 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 1em;
+        }
+        .button:hover {
+            background-color: whitesmoke;
+            background-image: linear-gradient(Gray, Black);
+            cursor: pointer;
+        }
+        table {
+            border-collapse: collapse;
+            border-color: white;
+            background-color: black;
+            background-image: linear-gradient(Black,Gray);
+        }
+        td{
+            vertical-align:top;
+        }
+        thead{
+            font-size:25pt;
+            font-display:block;
+            font-style:oblique;
+        }
+    </style>
+</head>
+<body>
+    <p />&nbsp;<p />&nbsp;<p />
+    <table cellpadding="5" cellspacing="2" border="1" align="center">
+        <thead>
+            <tr>
+                <td colspan="3">
+                    Cherwell Geometric Layouts<br />
+                    <div class="CreateNote">Created By: Chad Folden</div>
+                </td>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                Find Triangle Coordinates Using Key <br /> 
+                <div class="SmallNote">For example: A3</div>
+            </td>
+            <td><input type="text" id="KeyVal" size="2" maxlength="6" /></td>
+            <td><input type="button" class="button" value="Search" onclick="GetUsingKey();" /></td>
+        </tr>
+
+        <tr>
+            <td>
+                Find Triangle Using Coordinates <br />
+                <div class="SmallNote">For example:</div>
+                <div class="SmallNote">&nbsp;&nbsp;&nbsp;X1: 0  Y1: 20</div>
+                <div class="SmallNote">&nbsp;&nbsp;&nbsp;X2: 0  Y2: 30</div>
+                <div class="SmallNote">&nbsp;&nbsp;&nbsp;X3: 10  Y3: 30</div>
+            </td>
+            <td>
+                X1:<input type="text" id="X1" size="2" maxlength="5" /> Y1:<input type="text" id="Y1" size="2" maxlength="5" /> <br />
+                X2:<input type="text" id="X2" size="2" maxlength="5" /> Y2:<input type="text" id="Y2" size="2" maxlength="5" /> <br />
+                X3:<input type="text" id="X3" size="2" maxlength="5" /> Y3:<input type="text" id="Y3" size="2" maxlength="5" />
+            </td>
+            <td><input type="button" class="button" value="Search" onclick="GetUsingCoords();" /></td>
+        </tr>
+
+        <tr>
+            <td>Show All Triangle Coordinates</td>
+            <td></td>
+            <td><input type="button" class="button" value="Go" onclick="GetAll();" /></td>
+        </tr>
+
+        <tr>
+            <td colspan=34><p id="Answer" /></td>
+        </tr>
+    </table>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+        var URI_UsingKey = 'api/table/GetUsingKey';
+        var URI_UsingCoords = 'api/table/GetUsingCoords';
+        var URI_All = 'api/table/GetAll';
+
+        function FormatKeyItem(ID, Item) {
+            return 'Triangle: ' + ID + '<br />'
+                + ' Row: ' + Item.RowNum + '<br />'
+                + ' Col: ' + Item.ColumnNum + '<br />'
+                + ' Coord1: [' + Item.Coord1 + ']' + '<br />'
+                + ' Coord2: [' + Item.Coord2 + ']' + '<br />'
+                + ' Coord3: [' + Item.Coord3 + ']';
+        }
+
+        function FormatCoordItem(Item) {
+            return 'Triangle: ' + Item.Key + '<br />'
+                + ' Row: ' + Item.Value.RowNum + '<br />'
+                + ' Col: ' + Item.Value.ColumnNum + '<br />'
+                + ' Coord1: [' + Item.Value.Coord1 + ']' + '<br />'
+                + ' Coord2: [' + Item.Value.Coord2 + ']' + '<br />'
+                + ' Coord3: [' + Item.Value.Coord3 + ']';
+        }
+
+        function FormatAllItem(Item) {
+            return 'Triangle: ' + Item.Key + ', '
+                + ' Row: ' + Item.Value.RowNum + ', '
+                + ' Col: ' + Item.Value.ColumnNum + ', '
+                + ' Coord1: [' + Item.Value.Coord1 + ']' + ', '
+                + ' Coord2: [' + Item.Value.Coord2 + ']' + ', '
+                + ' Coord3: [' + Item.Value.Coord3 + ']';
+        }
+
+        function FomratErrMsg() { }
+
+        function GetUsingKey() {
+            $('#Answer').text("");
+            var KeyVal = $('#KeyVal').val();
+            $.getJSON(URI_UsingKey + '/' + KeyVal)
+                .done(function (Data) {
+                    $('#Answer').html(FormatKeyItem(KeyVal, Data));
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#Answer').text('Error: ' + err);
+                });
+        }
+
+        function GetUsingCoords() {
+            $('#Answer').text("");
+            var X1 = $('#X1').val();
+            var Y1 = $('#Y1').val();
+            var X2 = $('#X2').val();
+            var Y2 = $('#Y2').val();
+            var X3 = $('#X3').val();
+            var Y3 = $('#Y3').val();
+            $.getJSON(URI_UsingCoords + '/' + X1 + '/' + Y1 + '/' + X2 + '/' + Y2 + '/' + X3 + '/' + Y3)
+                .done(function (Data) {
+                    $('#Answer').html(FormatCoordItem(Data));
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#Answer').text('Error: ' + err);
+                });
+        }
+
+        function GetAll() {
+            $('#Answer').text("");
+            $.getJSON(URI_All)
+                .done(function (Data) {
+                    $.each(Data, function (key, Item) {
+                        // Add a list item for the product.
+                        $('<li>', { text: FormatAllItem(Item) }).appendTo($('#Answer'));
+                    });
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#Answer').text('Error: ' + err);
+                });
+        }
+
+    </script>
+</body>
+</html>
