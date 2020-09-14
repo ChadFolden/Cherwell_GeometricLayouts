@@ -1,7 +1,7 @@
 ### Cherwell_GeometricLayouts ###
 
 This is a C# WebAPI with a javascript/jQuery HTML front end for the purpose of a pre-interview exercise at Cherwell Software.
-For the simplest visual, download the code here and open the Cherwell_GeometricLayouts/Cherwell_GeometryWebAPI.sln within Visual Studio 2017+ and then choose Debug->Start without Debugging
+For the simplest visual, download the code here and open the Cherwell_GeometryWebAPI/Cherwell_GeometryWebAPI.sln within Visual Studio 2017+ and then choose Debug->Start without Debugging
 
 http://localhost:65224/index.html 
 
