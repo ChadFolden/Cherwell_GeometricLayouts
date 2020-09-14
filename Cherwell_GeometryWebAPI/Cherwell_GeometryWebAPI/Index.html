@@ -59,6 +59,39 @@
             font-display:block;
             font-style:oblique;
         }
+
+        .TopTriangle {
+            position: relative;
+        }
+
+            .TopTriangle:after { 
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 0;
+                height: 0;
+                display: block;
+                border-left: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+                border-top: 10px solid #f00;
+            }
+
+        .BottomTriangle {
+            position: relative;
+        }
+
+            .BottomTriangle:after {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 0;
+                height: 0;
+                display: block;
+                border-right: 10px solid transparent;
+                border-bottom: 10px solid #f00;
+            }
     </style>
 </head>
 <body>
@@ -74,7 +107,7 @@
         </thead>
         <tr>
             <td>
-                Find Triangle Coordinates Using Key <br /> 
+                Find Triangle Coordinates Using Key <br />
                 <div class="SmallNote">For example: A3</div>
             </td>
             <td><input type="text" id="KeyVal" size="2" maxlength="6" /></td>
@@ -104,6 +137,67 @@
         </tr>
 
         <tr>
+            <td colspan="3" align="center">
+                <!--TODO: Create table dynamically based off values returned from service-->
+                <table border="1" id="ImgTble">
+                    <tr>
+                        <td width="10px" height="10px" id="R1C1"></td>
+                        <td width="10px" height="10px" id="R1C2"></td>
+                        <td width="10px" height="10px" id="R1C3"></td>
+                        <td width="10px" height="10px" id="R1C4"></td>
+                        <td width="10px" height="10px" id="R1C5"></td>
+                        <td width="10px" height="10px" id="R1C6"></td>
+                    </tr>
+
+                    <tr>
+                        <td width="10px" height="10px" id="R2C1"></td>
+                        <td width="10px" height="10px" id="R2C2"></td>
+                        <td width="10px" height="10px" id="R2C3"></td>
+                        <td width="10px" height="10px" id="R2C4"></td>
+                        <td width="10px" height="10px" id="R2C5"></td>
+                        <td width="10px" height="10px" id="R2C6"></td>
+                    </tr>
+
+                    <tr>
+                        <td width="10px" height="10px" id="R3C1"></td>
+                        <td width="10px" height="10px" id="R3C2"></td>
+                        <td width="10px" height="10px" id="R3C3"></td>
+                        <td width="10px" height="10px" id="R3C4"></td>
+                        <td width="10px" height="10px" id="R3C5"></td>
+                        <td width="10px" height="10px" id="R3C6"></td>
+                    </tr>
+
+                    <tr>
+                        <td width="10px" height="10px" id="R4C1"></td>
+                        <td width="10px" height="10px" id="R4C2"></td>
+                        <td width="10px" height="10px" id="R4C3"></td>
+                        <td width="10px" height="10px" id="R4C4"></td>
+                        <td width="10px" height="10px" id="R4C5"></td>
+                        <td width="10px" height="10px" id="R4C6"></td>
+                    </tr>
+
+                    <tr>
+                        <td width="10px" height="10px" id="R5C1"></td>
+                        <td width="10px" height="10px" id="R5C2"></td>
+                        <td width="10px" height="10px" id="R5C3"></td>
+                        <td width="10px" height="10px" id="R5C4"></td>
+                        <td width="10px" height="10px" id="R5C5"></td>
+                        <td width="10px" height="10px" id="R5C6"></td>
+                    </tr>
+
+                    <tr>
+                        <td width="10px" height="10px" id="R6C1"></td>
+                        <td width="10px" height="10px" id="R6C2"></td>
+                        <td width="10px" height="10px" id="R6C3"></td>
+                        <td width="10px" height="10px" id="R6C4"></td>
+                        <td width="10px" height="10px" id="R6C5"></td>
+                        <td width="10px" height="10px" id="R6C6"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
             <td colspan=34><p id="Answer" /></td>
         </tr>
     </table>
@@ -115,6 +209,7 @@
         var URI_All = 'api/table/GetAll';
 
         function FormatKeyItem(ID, Item) {
+            FormatImageTable(Item.RowNum, Item.ColumnNum, ID);
             return 'Triangle: ' + ID + '<br />'
                 + ' Row: ' + Item.RowNum + '<br />'
                 + ' Col: ' + Item.ColumnNum + '<br />'
@@ -124,6 +219,7 @@
         }
 
         function FormatCoordItem(Item) {
+            FormatImageTable(Item.Value.RowNum, Item.Value.ColumnNum, Item.Key);
             return 'Triangle: ' + Item.Key + '<br />'
                 + ' Row: ' + Item.Value.RowNum + '<br />'
                 + ' Col: ' + Item.Value.ColumnNum + '<br />'
@@ -141,9 +237,35 @@
                 + ' Coord3: [' + Item.Value.Coord3 + ']';
         }
 
-        function FomratErrMsg() { }
+        function FormatImageTable(Row, Col, Key) {
+            ClearAllImageSelections();
+            var KeyNum = (Key.substring(1, Key.length));
+            if (KeyNum % 2 == 0)
+                $('#R' + Row + 'C' + Col).addClass("TopTriangle");
+            else
+                $('#R' + Row + 'C' + Col).addClass("BottomTriangle");
+        }
+
+        function ClearAllImageSelections() {
+            $("#ImgTble td").removeClass();
+        }
+
+        function ClearCoords() {
+            $('#X1').val('');
+            $('#Y1').val('');
+            $('#X2').val('');
+            $('#Y2').val('');
+            $('#X3').val('');
+            $('#Y3').val('');
+        }
+
+        function ClearKey() {
+            $('#KeyVal').val('');
+        }
 
         function GetUsingKey() {
+            ClearAllImageSelections();
+            ClearCoords()
             $('#Answer').text("");
             var KeyVal = $('#KeyVal').val();
             $.getJSON(URI_UsingKey + '/' + KeyVal)
@@ -156,6 +278,8 @@
         }
 
         function GetUsingCoords() {
+            ClearKey();
+            ClearAllImageSelections();
             $('#Answer').text("");
             var X1 = $('#X1').val();
             var Y1 = $('#Y1').val();
@@ -173,6 +297,9 @@
         }
 
         function GetAll() {
+            ClearCoords();
+            ClearKey();
+            ClearAllImageSelections();
             $('#Answer').text("");
             $.getJSON(URI_All)
                 .done(function (Data) {
