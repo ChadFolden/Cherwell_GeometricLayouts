@@ -3,7 +3,7 @@
 This is a C# WebAPI with a javascript/jQuery HTML front end for the purpose of a pre-interview exercise at Cherwell Software.
 For the simplest visual, download the code here and open the Cherwell_GeometryWebAPI/Cherwell_GeometryWebAPI.sln within Visual Studio 2017+ and then choose Debug->Start without Debugging.  
 
-The [front end user interface](http://localhost:65224/index.html) should look like this: ![GUI](https://drive.google.com/file/d/1WA5WaBr43XvEuPhSOOQutRnyVqmM_-1U/view?usp=sharing)
+The [front end user interface](http://localhost:65224/index.html) should look like this: ![GUI](https://drive.google.com/uc?export=view&id=1WA5WaBr43XvEuPhSOOQutRnyVqmM_-1U)
 
  
 ### The Exercise
