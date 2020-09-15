@@ -1,4 +1,4 @@
-# Cherwell_GeometricLayouts ###
+# Cherwell_GeometricLayouts
 
 This is a C# WebAPI with a javascript/jQuery HTML front end for the purpose of a pre-interview exercise at Cherwell Software.
 For the simplest visual, download the code here and open the Cherwell_GeometryWebAPI/Cherwell_GeometryWebAPI.sln within Visual Studio 2017+ and then choose Debug->Start without Debugging.  
@@ -13,7 +13,7 @@ The task, calculate the triangle coordinates for an image with right triangles s
 
 ![Table](https://drive.google.com/uc?export=view&id=1csU9_p4PZY7zG5bM5BXtoAKU8o7nQ4h3)
 
-![](https://drive.google.com/uc?export=view&id=1DC7Gvq9A3nJJMhps85Y5oV0nKepsxZWz)
+![Triangles](https://drive.google.com/uc?export=view&id=1DC7Gvq9A3nJJMhps85Y5oV0nKepsxZWz)
 
 While debugging, an example WebAPI URL reference could be: 
 ```html
@@ -24,7 +24,7 @@ http://localhost:65224/api/table/getusingkey/A2
 ##### 1.B
 Lastly, given the vertex coordinates, calculate the row and column for the triangle:
 
-![](https://drive.google.com/uc?export=view&id=1JQigp_AzK60ou0jdl866GS3ScQGsmnn2)
+![Vertex](https://drive.google.com/uc?export=view&id=1JQigp_AzK60ou0jdl866GS3ScQGsmnn2)
 
 While debugging, an example WebAPI URL reference could be: 
 ```html
