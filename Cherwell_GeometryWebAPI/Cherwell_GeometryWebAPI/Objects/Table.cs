@@ -25,7 +25,7 @@ namespace Cherwell_Geometry.Objects
         /// <summary>
         /// The list of triangles in this table
         /// </summary>
-        public List<KeyValuePair<String, Triangle>> Triangles;
+        public List<Triangle> Triangles;
 
     #endregion
 
@@ -43,7 +43,7 @@ namespace Cherwell_Geometry.Objects
                 throw new ArgumentOutOfRangeException(String.Format("Invalid Number of rows ({0}).  Row count cannot exceed {1}", TotalRows, MaxRows));
 
             //Init list of triangles (NumRows X 2 triangles per column)
-            Triangles = new List<KeyValuePair<String, Triangle>>(TotalRows * (TotalColumns * 2));
+            Triangles = new List<Triangle>(TotalRows * (TotalColumns * 2));
 
             for (Int16 iRows = 0; iRows < TotalRows; iRows++)
             {
@@ -51,6 +51,7 @@ namespace Cherwell_Geometry.Objects
                 {
                     String Key = (Convert.ToChar(iRows + 65).ToString()) + (jCols + 1).ToString(); // Assign key value based off ascii char code and column
                     Triangle ThisTriangle = new Triangle();
+                    ThisTriangle.Key = Key;
                     ThisTriangle.ColumnNum = 1 + Math.Abs(jCols / 2);                              // Assign column number by 'for' column .. plus 1 since is zero-based
                     ThisTriangle.RowNum = iRows + 1;                                              // Assign row number .. plus 1 since is zero-based
                     Int32 Coord1X = (Math.Abs(jCols / 2) * Triangle.RightTriangleLen);           // X coordinate = Triange height, every 2 columns
@@ -68,7 +69,7 @@ namespace Cherwell_Geometry.Objects
                         ThisTriangle.Coord3 = new Point((ThisTriangle.ColumnNum * Triangle.RightTriangleLen), ((iRows + 1) * Triangle.RightTriangleLen));
                     }
 
-                    Triangles.Add(new KeyValuePair<string, Triangle>(Key, ThisTriangle));
+                    Triangles.Add(ThisTriangle);
                 }
             }
         }
@@ -86,11 +87,11 @@ namespace Cherwell_Geometry.Objects
         {
             ValidateInput(Key);
             Triangle RetVal = null;
-            foreach (KeyValuePair<String, Triangle> TR in this.Triangles)
+            foreach (Triangle TR in this.Triangles)
             {
                 if (TR.Key.ToLower() == Key.ToLower())
                 {
-                    RetVal = TR.Value;
+                    RetVal = TR;
                     break;
                 }
             }
@@ -105,12 +106,12 @@ namespace Cherwell_Geometry.Objects
         /// <param name="Coord2">The coordinates 2.</param>
         /// <param name="Coord3">The coordinates 3.</param>
         /// <returns></returns>
-        public KeyValuePair<String, Triangle> GetTriangleUsingCoordinates(Point Coord1, Point Coord2, Point Coord3)
+        public Triangle GetTriangleUsingCoordinates(Point Coord1, Point Coord2, Point Coord3)
         {
-            KeyValuePair<String, Triangle> RetVal = new KeyValuePair<string, Triangle>();
-            foreach (KeyValuePair<String, Triangle> TR in this.Triangles)
+            Triangle RetVal = new Triangle();
+            foreach (Triangle TR in this.Triangles)
             {
-                if (TR.Value.Coord1 == Coord1 && TR.Value.Coord2 == Coord2 && TR.Value.Coord3 == Coord3)
+                if (TR.Coord1 == Coord1 && TR.Coord2 == Coord2 && TR.Coord3 == Coord3)
                 {
                     RetVal = TR;
                     break;

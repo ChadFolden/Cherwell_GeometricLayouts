@@ -16,7 +16,6 @@ namespace Cherwell_GeometryWebAPI.Controllers
         public Int16 Columns = 6;
 
         [HttpGet]
-        [ActionName("GetUsingKey")]
         [Route("api/Table/GetUsingKey/{KeyVal}")]
         /// <summary>
         /// Gets the triangle using the key value.
@@ -48,7 +47,6 @@ namespace Cherwell_GeometryWebAPI.Controllers
         }  
 
         [HttpGet]
-        [ActionName("GetUsingCoords")]
         [Route("api/Table/GetUsingCoords/{P1X}/{P1Y}/{P2X}/{P2Y}/{P3X}/{P3Y}")]
         /// <summary>
         /// Gets the triangle using coordinates.
@@ -60,7 +58,7 @@ namespace Cherwell_GeometryWebAPI.Controllers
         /// <param name="P3X">The Third Point X coordinate.</param>
         /// <param name="P3Y">The Third Point Y coordinate.</param>
         /// <returns></returns>
-        public KeyValuePair<String, Triangle> GetTriangleUsingCoordinates(String P1X, String P1Y, String P2X, String P2Y, String P3X, String P3Y)
+        public Triangle GetTriangleUsingCoordinates(String P1X, String P1Y, String P2X, String P2Y, String P3X, String P3Y)
         {
             try
             {
@@ -79,7 +77,7 @@ namespace Cherwell_GeometryWebAPI.Controllers
                 Point P2 = new Point(X2, Y2);
                 Point P3 = new Point(X3, Y3);
 
-                KeyValuePair<String, Triangle> Result = TheTable.GetTriangleUsingCoordinates(P1, P2, P3);
+                Triangle Result = TheTable.GetTriangleUsingCoordinates(P1, P2, P3);
 
                 if (Result.Key != null)
                     return Result;
@@ -95,14 +93,13 @@ namespace Cherwell_GeometryWebAPI.Controllers
         }
 
         [HttpGet]
-        [ActionName("GetAll")]
         [Route("api/Table/GetAll")]
         /// <summary>
         /// Gets a lsit of all triangles in the table.
         /// </summary>
         /// <returns>List of Triangles</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">There are 0 triangles.</exception>
-        public List<KeyValuePair<String, Triangle>> GetAllTriangles()
+        public List<Triangle> GetAllTriangles()
         {
             try
             {

@@ -78,7 +78,7 @@ namespace Cherwell_GeometryWebAPI.Tests
         {
             TableController Ctrlr = new Controllers.TableController();
 
-            KeyValuePair<String, Triangle> A1 = Ctrlr.GetTriangleUsingCoordinates("0","0","0","10","10","10");
+            Triangle A1 = Ctrlr.GetTriangleUsingCoordinates("0","0","0","10","10","10");
 
             Assert.IsTrue(A1.Key == "A1");
         }
@@ -89,7 +89,7 @@ namespace Cherwell_GeometryWebAPI.Tests
             try
             {
                 TableController Ctrlr = new Controllers.TableController();
-                KeyValuePair<String, Triangle> A1 = Ctrlr.GetTriangleUsingCoordinates("A0", "B0", "C0", "D10", "E10", "F10");
+                Triangle A1 = Ctrlr.GetTriangleUsingCoordinates("A0", "B0", "C0", "D10", "E10", "F10");
                 Assert.IsTrue(false);
             }
             catch (HttpResponseException ex)
@@ -104,7 +104,7 @@ namespace Cherwell_GeometryWebAPI.Tests
             try
             {
                 TableController Ctrlr = new Controllers.TableController();
-                KeyValuePair<String, Triangle> A1 = Ctrlr.GetTriangleUsingCoordinates("0", "0", "0", "10", "10", null);
+                Triangle A1 = Ctrlr.GetTriangleUsingCoordinates("0", "0", "0", "10", "10", null);
                 Assert.IsTrue(false);
             }
             catch (HttpResponseException ex)
@@ -122,7 +122,7 @@ namespace Cherwell_GeometryWebAPI.Tests
         {
             TableController Ctrlr = new Controllers.TableController();
 
-            List<KeyValuePair<String, Triangle>> All = Ctrlr.GetAllTriangles();
+            List<Triangle> All = Ctrlr.GetAllTriangles();
 
             Assert.IsTrue(All.Count == ((Ctrlr.Rows * Ctrlr.Columns) * 2));
         }

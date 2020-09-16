@@ -219,22 +219,22 @@
         }
 
         function FormatCoordItem(Item) {
-            FormatImageTable(Item.Value.RowNum, Item.Value.ColumnNum, Item.Key);
+            FormatImageTable(Item.RowNum, Item.ColumnNum, Item.Key);
             return 'Triangle: ' + Item.Key + '<br />'
-                + ' Row: ' + Item.Value.RowNum + '<br />'
-                + ' Col: ' + Item.Value.ColumnNum + '<br />'
-                + ' Coord1: [' + Item.Value.Coord1 + ']' + '<br />'
-                + ' Coord2: [' + Item.Value.Coord2 + ']' + '<br />'
-                + ' Coord3: [' + Item.Value.Coord3 + ']';
+                + ' Row: ' + Item.RowNum + '<br />'
+                + ' Col: ' + Item.ColumnNum + '<br />'
+                + ' Coord1: [' + Item.Coord1 + ']' + '<br />'
+                + ' Coord2: [' + Item.Coord2 + ']' + '<br />'
+                + ' Coord3: [' + Item.Coord3 + ']';
         }
 
         function FormatAllItem(Item) {
             return 'Triangle: ' + Item.Key + ', '
-                + ' Row: ' + Item.Value.RowNum + ', '
-                + ' Col: ' + Item.Value.ColumnNum + ', '
-                + ' Coord1: [' + Item.Value.Coord1 + ']' + ', '
-                + ' Coord2: [' + Item.Value.Coord2 + ']' + ', '
-                + ' Coord3: [' + Item.Value.Coord3 + ']';
+                + ' Row: ' + Item.RowNum + ', '
+                + ' Col: ' + Item.ColumnNum + ', '
+                + ' Coord1: [' + Item.Coord1 + ']' + ', '
+                + ' Coord2: [' + Item.Coord2 + ']' + ', '
+                + ' Coord3: [' + Item.Coord3 + ']';
         }
 
         function FormatImageTable(Row, Col, Key) {

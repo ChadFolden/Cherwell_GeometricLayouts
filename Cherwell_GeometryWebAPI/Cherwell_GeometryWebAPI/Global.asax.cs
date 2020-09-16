@@ -7,11 +7,17 @@ namespace Cherwell_GeometryWebAPI
     {
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configure(Register);
 
             //Force JSON responses on all requests
             //GlobalConfiguration.Configuration.Formatters.Clear();
             //GlobalConfiguration.Configuration.Formatters.Add(new JsonMediaTypeFormatter());
+        }
+
+        public void Register(HttpConfiguration config)
+        {
+            // Web API routes
+            config.MapHttpAttributeRoutes();
         }
     }
 }

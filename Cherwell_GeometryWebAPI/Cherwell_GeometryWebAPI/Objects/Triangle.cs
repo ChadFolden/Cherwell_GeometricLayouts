@@ -68,6 +68,13 @@ namespace Cherwell_Geometry.Objects
         /// The column number.
         /// </value>
         public Int32 ColumnNum { get; set; }
+        /// <summary>
+        /// Gets or sets the key.
+        /// </summary>
+        /// <value>
+        /// The key.
+        /// </value>
+        public String Key { get; set; }
 
     #endregion
 
