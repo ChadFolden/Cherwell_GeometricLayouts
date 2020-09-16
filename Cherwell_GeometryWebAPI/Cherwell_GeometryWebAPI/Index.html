@@ -208,7 +208,7 @@
         var URI_UsingCoords = 'api/table/GetUsingCoords';
         var URI_All = 'api/table/GetAll';
 
-        function FormatKeyItem(ID, Item) {
+        function FormatKeyItemOut(ID, Item) {
             FormatImageTable(Item.RowNum, Item.ColumnNum, ID);
             return 'Triangle: ' + ID + '<br />'
                 + ' Row: ' + Item.RowNum + '<br />'
@@ -218,7 +218,7 @@
                 + ' Coord3: [' + Item.Coord3 + ']';
         }
 
-        function FormatCoordItem(Item) {
+        function FormatCoordItemOut(Item) {
             FormatImageTable(Item.RowNum, Item.ColumnNum, Item.Key);
             return 'Triangle: ' + Item.Key + '<br />'
                 + ' Row: ' + Item.RowNum + '<br />'
@@ -228,7 +228,7 @@
                 + ' Coord3: [' + Item.Coord3 + ']';
         }
 
-        function FormatAllItem(Item) {
+        function FormatAllItemOut(Item) {
             return 'Triangle: ' + Item.Key + ', '
                 + ' Row: ' + Item.RowNum + ', '
                 + ' Col: ' + Item.ColumnNum + ', '
@@ -263,14 +263,44 @@
             $('#KeyVal').val('');
         }
 
+        function ValidateKeyInput(Key) {
+            if (Key.length == 0) {
+                return false;
+            }
+            //Check that first char is a letter and rest is integer
+            var LetterRegex = /[a-zA-Z]/g;
+            var LettersFound = Key.substring(0, 1).match(LetterRegex);
+            if (LettersFound != null) { //check for numbers
+                var TheNum = Number(Key.substring(1, Key.length))
+                return Number.isInteger(TheNum);
+            }
+            else
+                return false;
+        }
+
+        function ValidateCoordInput(X1, Y1, X2, Y2, X3, Y3) {
+
+            var X1r = Number(X1);
+            var Y1r = Number(Y1);
+            var X2r = Number(X2);
+            var Y2r = Number(Y2);
+            var X3r = Number(X3);
+            var Y3r = Number(Y3);
+            return Number.isInteger(X1r) && Number.isInteger(Y1r) && Number.isInteger(X2r) && Number.isInteger(Y2r) && Number.isInteger(X3r) && Number.isInteger(Y3r);
+        }
+
         function GetUsingKey() {
             ClearAllImageSelections();
             ClearCoords()
             $('#Answer').text("");
             var KeyVal = $('#KeyVal').val();
+            if (ValidateKeyInput(KeyVal) == false) {
+                $('#Answer').text("Please enter a valid value, starting with a single A-Z character and ending with a valid whole numbers, and try again.");
+                return;
+            }
             $.getJSON(URI_UsingKey + '/' + KeyVal)
                 .done(function (Data) {
-                    $('#Answer').html(FormatKeyItem(KeyVal, Data));
+                    $('#Answer').html(FormatKeyItemOut(KeyVal, Data));
                 })
                 .fail(function (jqXHR, textStatus, err) {
                     $('#Answer').text('Error: ' + err);
@@ -287,9 +317,13 @@
             var Y2 = $('#Y2').val();
             var X3 = $('#X3').val();
             var Y3 = $('#Y3').val();
+            if (ValidateCoordInput(X1, Y1, X2, Y2, X3, Y3) == false) {
+                $('#Answer').text("Please enter a valid coordinate values (whole numbers) and try again.");
+                return;
+            }
             $.getJSON(URI_UsingCoords + '/' + X1 + '/' + Y1 + '/' + X2 + '/' + Y2 + '/' + X3 + '/' + Y3)
                 .done(function (Data) {
-                    $('#Answer').html(FormatCoordItem(Data));
+                    $('#Answer').html(FormatCoordItemOut(Data));
                 })
                 .fail(function (jqXHR, textStatus, err) {
                     $('#Answer').text('Error: ' + err);
@@ -305,7 +339,7 @@
                 .done(function (Data) {
                     $.each(Data, function (key, Item) {
                         // Add a list item for the product.
-                        $('<li>', { text: FormatAllItem(Item) }).appendTo($('#Answer'));
+                        $('<li>', { text: FormatAllItemOut(Item) }).appendTo($('#Answer'));
                     });
                 })
                 .fail(function (jqXHR, textStatus, err) {
