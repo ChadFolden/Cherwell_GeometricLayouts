@@ -20,7 +20,7 @@ namespace Cherwell_Geometry.Objects
         /// <remarks>
         /// Do not extend past 26 (without code modifications) due to A-Z alpha limitations
         /// </remarks>
-        private const Int16 MaxRows = 26;
+        public static Int16 MaxRows = 26;
 
         /// <summary>
         /// The list of triangles in this table
