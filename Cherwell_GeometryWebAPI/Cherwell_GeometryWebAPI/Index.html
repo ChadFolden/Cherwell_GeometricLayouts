@@ -21,7 +21,7 @@
         .CreateNote {
             font-size: 10pt;
             text-align: right;
-            animation: blinker 2s linear infinite;
+            animation: blinker 3s linear infinite;
         }
         @keyframes blinker {
             20% {
@@ -64,17 +64,14 @@
             position: relative;
         }
 
-            .TopTriangle:after { 
+            .TopTriangle:after {
                 content: "";
                 position: absolute;
                 top: 0;
                 right: 0;
-                width: 0;
-                height: 0;
-                display: block;
-                border-left: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-                border-top: 10px solid #f00;
+                border-style: solid;
+                border-width: 0 10px 10px 0;
+                border-color: transparent #f00 transparent transparent;
             }
 
         .BottomTriangle {
@@ -84,13 +81,11 @@
             .BottomTriangle:after {
                 content: "";
                 position: absolute;
-                top: 0;
-                right: 0;
-                width: 0;
-                height: 0;
-                display: block;
-                border-right: 10px solid transparent;
-                border-bottom: 10px solid #f00;
+                bottom: 0;
+                left: 0;
+                border-style: solid;
+                border-width: 10px 0 0 10px;
+                border-color: transparent transparent transparent #f00;
             }
     </style>
 </head>
