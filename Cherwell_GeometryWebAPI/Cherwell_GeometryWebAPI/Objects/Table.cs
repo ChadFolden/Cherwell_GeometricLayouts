@@ -52,21 +52,20 @@ namespace Cherwell_Geometry.Objects
                     String Key = (Convert.ToChar(iRows + 65).ToString()) + (jCols + 1).ToString(); // Assign key value based off ascii char code and column
                     Triangle ThisTriangle = new Triangle();
                     ThisTriangle.Key = Key;
-                    ThisTriangle.ColumnNum = 1 + Math.Abs(jCols / 2);                              // Assign column number by 'for' column .. plus 1 since is zero-based
+                    ThisTriangle.ColumnNum = 1 + Math.Abs(jCols / 2);                             // Assign column number by 'for' column .. plus 1 since is zero-based
                     ThisTriangle.RowNum = iRows + 1;                                              // Assign row number .. plus 1 since is zero-based
-                    Int32 Coord1X = (Math.Abs(jCols / 2) * Triangle.RightTriangleLen);           // X coordinate = Triange height, every 2 columns
-                    Int32 Coord1Y = (iRows * Triangle.RightTriangleLen);                         // Y coordinate = Triangle height X row
+                    Int32 Coord1X = (Math.Abs(jCols / 2) * Triangle.RightTriangleLen);            // X coordinate = Triange height, every 2 columns
+                    Int32 Coord1Y = (iRows * Triangle.RightTriangleLen);                          // Y coordinate = Triangle height X row
                     ThisTriangle.Coord1 = new Point(Coord1X, Coord1Y);
+                    ThisTriangle.Coord3 = new Point(((ThisTriangle.ColumnNum) * Triangle.RightTriangleLen), ((iRows + 1) * Triangle.RightTriangleLen));
 
                     if (jCols % 2 == 0) //even numbered triangles
                     {
                         ThisTriangle.Coord2 = new Point(((ThisTriangle.ColumnNum - 1) * Triangle.RightTriangleLen), ((iRows + 1) * Triangle.RightTriangleLen));
-                        ThisTriangle.Coord3 = new Point(((ThisTriangle.ColumnNum) * Triangle.RightTriangleLen), ((iRows + 1) * Triangle.RightTriangleLen));
                     }
                     else //odd numbered triangles
                     {
                         ThisTriangle.Coord2 = new Point(ThisTriangle.ColumnNum * Triangle.RightTriangleLen, iRows * Triangle.RightTriangleLen);
-                        ThisTriangle.Coord3 = new Point((ThisTriangle.ColumnNum * Triangle.RightTriangleLen), ((iRows + 1) * Triangle.RightTriangleLen));
                     }
 
                     Triangles.Add(ThisTriangle);
